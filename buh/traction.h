@@ -4,69 +4,56 @@ using namespace std;
 
 class transaction
 {
-	string Date;
+	string date;
 	string source;
 	string destination;
-	int summ;
+	double summ;
 	string note;
 
 public:
-	
+
 	//*
-	void Parse(string in) //конструктор принимает строку и на основании ее делате объект транзакция
+	void Parse(string in) //
 	{
-		size_t pos;
-		pos=in.find_first_not_of(" \t", pos);
-		size_t pos1 = in.find_first_of(" \t");
-
-		Date = in.substr(pos, pos1-pos);
-		pos = pos1;
-		size_t pos1 = in.find_first_of(" \t", pos);
-		source = in.substr(pos, pos1-pos);
-		pos = pos1;
-		size_t pos1 = in.find_first_of(" \t", pos);
-		destination = in.substr(pos, pos1-pos);
-		pos = pos1;
-		size_t pos1 = in.find_first_of(" \t", pos);
-		summ = stoi(in.substr(pos, pos1-pos));
-		pos=pos1
 
 
+		size_t pos, pos1;
+		pos1 = in.find_first_of(" \t", pos);
+		date = in.substr(pos, pos1 - pos);
 
-		/*
-		unsigned int i = 0;
-		while (in[i] != ' ' && in[i] != '\n')
-		{
-			Date += in[i];
-			++i;
-		}
-		++i;
-		while (in[i] != ' ' && in[i] != '\n')
-		{
-			source += in[i];
-			++i;
-		}
-		++i;
-		while (in[i] != ' ' && in[i] != '\n')
-		{
-			destination += in[i];
-			++i;
+		pos = in.find_first_not_of(" \t", pos1);
+		pos1 = in.find_first_of(" \t", pos);
+		source = in.substr(pos, pos1 - pos);
 
-		}
-		++i;
-		char *tmp_toint = new char[250];
+		pos = in.find_first_not_of(" \t", pos1);
+		pos1 = in.find_first_of(" \t", pos);
+		destination = in.substr(pos, pos1 - pos);
 
-		for (unsigned int z = 0; in[i] != ' ' && in[i] != '\0'; ++i, ++z)
-		{
-			tmp_toint[z] = in[i];
-		}
-		summ = atoi(tmp_toint);
 
+		pos = in.find_first_not_of(" \t", pos1);
+		pos1 = in.find_first_of(" \t", pos);
+		summ = atof((in.substr(pos, pos1 - pos)).c_str()); // Почему- то не работает перевод из строки в float, нужно спросить.
+
+		pos = in.find_first_not_of(" \t", pos1);
+		note = in.substr(pos, 1000);
 	}
 	string getSource()
 	{
 		return source;
 	}
-	//*/
+	string getDestinon()
+	{
+		return destination;
 	}
+
+	double getSumm()
+	{
+		return summ;
+	}
+
+	string getDate()
+	{
+		return date;
+	}
+	//*/
 };
