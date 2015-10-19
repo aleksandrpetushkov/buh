@@ -144,10 +144,6 @@ void main()
 					cout << "Prihod: " << Prihod << endl;
 					cout << "Result: " << in - Rashod + Prihod << endl;
 
-
-
-
-
 				}
 
 				break;
