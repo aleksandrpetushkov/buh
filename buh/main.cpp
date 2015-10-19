@@ -90,6 +90,8 @@ void main()
 			case 2:
 				if (true)
 				{
+
+					///fjdskfjsdflks fjsf
 					unsigned int numberSchet = 0;
 					string dateBegin = "\0";
 					string dateEnd = "\0";
