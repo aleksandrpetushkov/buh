@@ -145,6 +145,9 @@ void main()
 					cout << "Result: " << in - Rashod + Prihod << endl;
 
 
+
+
+
 				}
 
 				break;
