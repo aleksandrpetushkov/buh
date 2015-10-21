@@ -175,8 +175,7 @@
 								{
 									break;
 								}
-								//jhjhjh
-								//test
+								
 							}
 							cout << "------------------------------------------------------------\n";
 							for (unsigned int i = 0; i < massData.size(); ++i)
@@ -246,8 +245,12 @@
 							}
 							// Счетаем баланс по транзакциям на начало периода
 							unsigned int i = 0;
-							for (; i != numberDataBegin - 1; ++i)
+							for (; i != massTransact.size(); ++i)
 							{
+								if (massData[numberDataBegin-1] == massTransact[i].getDate()) 
+								{
+									break;
+								}
 								if (massSchetr[numberSchet - 1] == massTransact[i].getSource())
 								{
 									in -= massTransact[i].getSumm();
@@ -259,7 +262,7 @@
 
 							}
 							// Счетем расход/приход за пераод
-							for (; i != numberDateEnd; ++i)
+							for (; i != massTransact.size(); ++i)
 							{
 								if (massSchetr[numberSchet - 1] == massTransact[i].getSource()) // Если движение денег происходит со счета это расход
 								{
@@ -268,6 +271,10 @@
 								else if (massSchetr[numberSchet - 1] == massTransact[i].getDestinon()) // Если движение денег происходит на счет это приход
 								{
 									Prihod += massTransact[i].getSumm();
+								}
+								if (massData[numberDateEnd - 1] == massTransact[i].getDate()) 
+								{
+									break;
 								}
 							}
 							cout << "Begin: " << in << endl;
