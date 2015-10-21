@@ -65,12 +65,13 @@ void main()
 		while (y != 10)
 		{
 
-			cout << "Enter number menu:\n1. Out all account.\n" << "2. Report time.\n10. Out program.\n";
+			cout << "Enter number menu:\n 1. Out all account.\n"
+				<< "10. Out program.\n";
 			cin >> y;
 			switch (y)
 			{
 			case 1:
-				for (unsigned int i = 0; i < massSchetr.size(); ++i)
+				for (unsigned int i = 0 ; i < massSchetr.size(); ++i)
 				{
 					double sm = 0;
 					for (unsigned int j = 0; j<massTransact.size(); ++j)
@@ -88,67 +89,7 @@ void main()
 				}
 				break;
 			case 2:
-				if (true)
-				{
-
-					///fjdskfjsdflks fjsf
-					unsigned int numberSchet = 0;
-					string dateBegin = "\0";
-					string dateEnd = "\0";
-					double begin = 0;
-					double in = 0;
-					double out = 0;
-					double Prihod = 0;
-					double Rashod = 0;
-					cout << "Enter number schet (no more " << massSchetr.size() << ")." << endl;
-					for (unsigned int i = 0; i < massSchetr.size(); ++i)
-					{
-						cout << i + 1 << ". " << massSchetr[i] << endl;
-
-					}
-					cin >> numberSchet;
-					cout << "Enter date begin: ";
-					cin >> dateBegin;
-					cout << "Enter date end: ";
-					cin >> dateEnd;
-					unsigned int i = 0;
-					for (; dateBegin != massTransact[i].getDate(); ++i)
-					{
-						if (massSchetr[numberSchet - 1] == massTransact[i].getSource())
-						{
-							in -= massTransact[i].getSumm();
-						}
-						else if (massSchetr[numberSchet - 1] == massTransact[i].getDestinon())
-						{
-							in += massTransact[i].getSumm();
-						}
-
-					}
-					while (true)
-						///for (bool end=true; dateEnd != massTransact[i].getDate(); ++i)
-					{
-						if (massSchetr[numberSchet - 1] == massTransact[i].getSource())
-						{
-							Rashod += massTransact[i].getSumm();
-						}
-						else if (massSchetr[numberSchet - 1] == massTransact[i].getDestinon())
-						{
-							Prihod += massTransact[i].getSumm();
-						}
-						if (dateEnd == massTransact[i].getDate())
-						{
-							break;
-						}
-						++i;
-					}
-					cout << "Begin: " << in << endl;
-					cout << "Rashod: " << Rashod << endl;
-					cout << "Prihod: " << Prihod << endl;
-					cout << "Result: " << in - Rashod + Prihod << endl;
-
-				}
-
-				break;
+			
 			default:
 				break;
 			}
@@ -156,10 +97,10 @@ void main()
 	}
 	else
 	{
-		cerr << "Error: cannot open file" << endl;
+		cerr << "Error: cannot open file"<<endl;
 	}
 
-
+	
 
 
 	system("pause");
