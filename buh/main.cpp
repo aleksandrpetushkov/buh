@@ -14,19 +14,7 @@
 		string tmp;
 		vector<transaction> massTransact; // Массив транзакций
 		vector<string> massSchetr; // Массив счетов
-		string st1 = "2015.01.02";
-		string st2 = "2015.01.25";
-		/*
-		if(st1>st2)
-		{
-			cout << st1 << endl;
-		}sd
-		else
-		{
-			cout << st2 << endl;
-		}
-		//*/
-		//*
+		vector<string> massData; //Массив дат транзакций
 		fstream fs("file.txt", ios::in);
 		if (fs)
 		{
@@ -42,12 +30,12 @@
 				else
 				{
 					massTransact.push_back(*new transaction(tmp));
-					if (massSchetr.size() == 0 && massTransact.size() != 0)
+					if (massSchetr.size() == 0 && massTransact.size() == 1)
 					{
-						massSchetr.push_back(massTransact[massTransact.size() - 1].getSource());
-						if (massTransact[massTransact.size() - 1].getSource() != massTransact[massTransact.size() - 1].getDestinon())
+						massSchetr.push_back(massTransact[0].getSource());
+						if (massTransact[0].getSource() != massTransact[0].getDestinon())
 						{
-							massTransact[massTransact.size() - 1].getDestinon();
+							massTransact[0].getDestinon();
 						}
 					}
 					else
@@ -73,9 +61,33 @@
 						{
 							massSchetr.push_back(massTransact[massTransact.size() - 1].getDestinon());
 						}
+
+						if (massData.size() == 0 && massTransact.size() == 1)
+						{
+							massData.push_back(massTransact[0].getDate());
+						}
+						else
+						{
+							bool dataNotExist=true;
+							for (unsigned int i = 0; i < massData.size(); ++i)
+							{
+								if(massData[massData.size()-1]== massTransact[massTransact.size() - 1].getDate())
+								{
+									dataNotExist = false;
+									break;
+								}
+							}
+							if(dataNotExist)
+							{
+								massData.push_back(massTransact[massTransact.size() - 1].getDate());
+							}
+						}
+
 					}
+					
 				}
 			}
+		
 			fs.close();
 			unsigned int y = 0;
 			while (y != 9)
@@ -108,26 +120,73 @@
 					if (true)
 					{
 						unsigned int numberSchet = 0;
-						string dateBegin = "\0";
-						string dateEnd = "\0";
+						unsigned int numberDataBegin = 0;
+						unsigned int numberDateEnd = 0;
 						double begin = 0;
 						double in = 0;
 						double out = 0;
 						double Prihod = 0;
 						double Rashod = 0;
-						cout << "Enter number schet (no more " << massSchetr.size() << ")." << endl;
+						cout << "------------------------------------------------------------\n";
 						for (unsigned int i = 0; i < massSchetr.size(); ++i)
 						{
 							cout << i + 1 << ". " << massSchetr[i] << endl;
 
 						}
-						cin >> numberSchet;
-						cout << "Enter date begin: ";
-						cin >> dateBegin;
-						cout << "Enter date end: ";
-						cin >> dateEnd;
+						cout << "Enter number schet (no more " << massSchetr.size() << "): ";
+						while(true)
+						{
+							cin >> numberSchet;
+							if(numberSchet<1||numberSchet>massSchetr.size())
+							{
+								cerr << "Error: incorrect number, reenter: ";
+							}
+							else
+							{
+								break;
+							}
+						}
+						cout << "------------------------------------------------------------\n";
+						for (unsigned int i = 0; i < massData.size(); ++i)
+						{
+							cout << i + 1 << ". " << massData[i] << endl;
+						}
+						cout << "Enter number date begin: ";
+						
+						while(true)
+						{
+							cin >> numberDataBegin;
+							if(numberDataBegin<1 || numberDataBegin>massData.size())
+							{
+								cerr << "Error: incorrect number, reenter: ";
+							}
+							else
+							{
+								break;
+							}
+						}
+						cout << "------------------------------------------------------------\n";
+						for (unsigned int i = numberDataBegin - 1; i < massData.size(); ++i)
+						{
+							cout << i + 1 << ". " << massData[i] << endl;
+						}
+						cout <<"Enter number date end: ";
+						
+						while (true)
+						{
+							cin >> numberDateEnd;
+							if (numberDateEnd<numberDataBegin || numberDateEnd>massData.size())
+							{
+								cerr << "Error: incorrect number, reenter: ";
+							}
+							else
+							{
+								break;
+							}
+						}
+						// Счетаем баланс по транзакциям на начало периода
 						unsigned int i = 0;
-						for (; dateBegin != massTransact[i].getDate(); ++i)
+						for (; i!= numberDataBegin-1; ++i)
 						{
 							if (massSchetr[numberSchet - 1] == massTransact[i].getSource())
 							{
@@ -139,26 +198,22 @@
 							}
 
 						}
-						while (true)
+						// Счетем расход/приход за пераод
+						for (; i != numberDateEnd; ++i)
 						{
-							if (massSchetr[numberSchet - 1] == massTransact[i].getSource())
+							if (massSchetr[numberSchet - 1] == massTransact[i].getSource()) // Если движение денег происходит со счета это расход
 							{
 								Rashod += massTransact[i].getSumm();
 							}
-							else if (massSchetr[numberSchet - 1] == massTransact[i].getDestinon())
+							else if (massSchetr[numberSchet - 1] == massTransact[i].getDestinon()) // Если движение денег происходит на счет это приход
 							{
 								Prihod += massTransact[i].getSumm();
 							}
-							if (dateEnd == massTransact[i].getDate())
-							{
-								break;
-							}
-							++i;
 						}
 						cout << "Begin: " << in << endl;
 						cout << "Rashod: " << Rashod << endl;
 						cout << "Prihod: " << Prihod << endl;
-						cout << "Result: " << in - Rashod + Prihod << endl;
+						cout << "Result: " << in - Rashod + Prihod << endl; 
 					}
 					break;
 			
@@ -172,8 +227,5 @@
 			cerr << "Error: cannot open file"<<endl;
 		}
 
-		//*/
-
-
 		system("pause");
-	}
+}
