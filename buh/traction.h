@@ -14,7 +14,7 @@ public:
 	transaction(){}
 	transaction(string in)
 	{
-		size_t pos, pos1;
+		size_t pos(0), pos1(0);
 		pos1 = in.find_first_of(" \t", pos);
 		date = in.substr(pos, pos1 - pos);
 
